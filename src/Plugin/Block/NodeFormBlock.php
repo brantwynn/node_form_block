@@ -25,7 +25,7 @@ class NodeFormBlock extends BlockBase implements ContainerFactoryPluginInterface
   /**
    * The entity form builder.
    *
-   * @var \Drupal\Core\Entity\EntityTypeManagerInterface
+   * @var \Drupal\Core\Entity\EntityFormBuilder
    */
   protected $entityFormBuilder;
 

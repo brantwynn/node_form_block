@@ -1,7 +1,8 @@
-name: node_form_block
+name: Node Form Block
 type: module
 description: Block displays the edit form of the current node in context.
 core: 8.x
 package: Custom
 dependencies:
+  - block
   - node
