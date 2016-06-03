@@ -8,8 +8,7 @@
 namespace Drupal\node_form_block\Plugin\Block;
 
 use Drupal\Core\Block\BlockBase;
-use Drupal\Core\Form\FormBuilder;
-use Drupal\Core\Entity\EntityTypeManagerInterface;
+use Drupal\Core\Entity\EntityFormBuilder;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -29,23 +28,16 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 class NodeFormBlock extends BlockBase implements ContainerFactoryPluginInterface {
 
   /**
-   * The form builder.
-   *
-   * @var \Drupal\Core\Form\FormBuilder
-   */
-  protected $formBuilder;
-
-  /**
-   * The entity type manager.
+   * The entity form builder.
    *
    * @var \Drupal\Core\Entity\EntityTypeManagerInterface
    */
-  protected $entityTypeManager;
+  protected $entityFormBuilder;
 
-  public function __construct(array $configuration, $plugin_id, $plugin_definition, FormBuilder $form_builder, EntityTypeManagerInterface $entity_type_manager) {
+
+  public function __construct(array $configuration, $plugin_id, $plugin_definition, EntityFormBuilder $entity_form_builder) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
-    $this->formBuilder = $form_builder;
-    $this->entityTypeManager = $entity_type_manager;
+    $this->entityFormBuilder = $entity_form_builder;
   }
 
   /**
@@ -56,8 +48,7 @@ class NodeFormBlock extends BlockBase implements ContainerFactoryPluginInterface
       $configuration,
       $plugin_id,
       $plugin_definition,
-      $container->get('form_builder'),
-      $container->get('entity_type.manager')
+      $container->get('entity.form_builder')
     );
   }
 
@@ -67,7 +58,7 @@ class NodeFormBlock extends BlockBase implements ContainerFactoryPluginInterface
   public function build() {
     $block = [];
     $node = $this->getContextValue('node');
-    $block = [$this->entityTypeManager->getFormObject('node', 'default')->setEntity($node)];
+    $block = [$this->entityFormBuilder->getForm($node, 'edit')];
     return $block;
   }
 
