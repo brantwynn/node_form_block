@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\node_form_block\Plugin\Block\NodeFormBlock.
- */
-
 namespace Drupal\node_form_block\Plugin\Block;
 
 use Drupal\Core\Block\BlockBase;
@@ -56,10 +51,8 @@ class NodeFormBlock extends BlockBase implements ContainerFactoryPluginInterface
    * {@inheritdoc}
    */
   public function build() {
-    $block = [];
     $node = $this->getContextValue('node');
-    $block = [$this->entityFormBuilder->getForm($node, 'edit')];
-    return $block;
+    return [$this->entityFormBuilder->getForm($node, 'edit')];
   }
 
 }
